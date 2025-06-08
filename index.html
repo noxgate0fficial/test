@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Static Browser Proxy</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+    textarea { width: 100%; height: 100px; }
+    pre { background: #f5f5f5; padding: 1em; }
+  </style>
+</head>
+<body>
+  <h1>Static Browser Proxy</h1>
+  <form id="proxy-form">
+    <label>
+      Target URL:<br>
+      <input type="url" id="target-url" required style="width:100%">
+    </label>
+    <button type="submit">Fetch</button>
+  </form>
+  <h2>Response</h2>
+  <pre id="response"></pre>
+  <script>
+    document.getElementById('proxy-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const url = document.getElementById('target-url').value;
+      const responseBox = document.getElementById('response');
+      responseBox.textContent = 'Loading...';
+      try {
+        const res = await fetch(url);
+        const text = await res.text();
+        responseBox.textContent = text;
+      } catch (err) {
+        responseBox.textContent = 'Error: ' + err;
+      }
+    });
+  </script>
+</body>
+</html>
